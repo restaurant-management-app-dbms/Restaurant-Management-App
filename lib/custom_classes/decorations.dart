@@ -4,25 +4,28 @@ class decorations {
   //Box Decoration:
 
   BoxDecoration boxDecor() {
-    return const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/cofee.jpg"), fit: BoxFit.fill));
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(12.0),
+      border: Border.all(color: Colors.black),
+    );
   }
 
-  BoxDecoration home_page_decor() {
+  BoxDecoration login_decor() {
     return BoxDecoration(
-        image: DecorationImage(image: AssetImage('assets/coffee_bg.png')));
+        image: DecorationImage(
+            image: AssetImage('assets/login.png'), fit: BoxFit.fill));
   }
+
   //Form Field Decoration:
 
   InputDecoration formDecor() {
     return const InputDecoration(
-        hintStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        filled: true,
-        fillColor: Colors.black87,
+        hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black87, width: 2.0)),
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(15.0))),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white, width: 2.0)));
+            borderSide: BorderSide(color: Colors.grey, width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(15.0))));
   }
 }
