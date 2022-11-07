@@ -60,7 +60,9 @@ class adduserState extends State<adduser> {
                     style: TextStyle(color: Colors.black, fontSize: 15.0),
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/role");
+                      },
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.red[500]),

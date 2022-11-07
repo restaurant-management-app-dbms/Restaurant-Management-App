@@ -5,23 +5,27 @@ import 'package:flutter/material.dart';
 class role extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  Center(
-          child: Card(
-              shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-              elevation:10.0,
-              child: Container(
-                margin:EdgeInsets.all(15.0),
-                padding:EdgeInsets.all(15.0),
-                child: Column(
-                  mainAxisAlignment:MainAxisAlignment.center,
-                  mainAxisSize:MainAxisSize.min,
-            children: [
-                button(data: "Waiter"),
-                button(data: "Cook"),
-                button(data: "Cashier"),
-            ],
-          ),
-              )),
-        );
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            elevation: 10.0,
+            child: Container(
+              margin: EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  button(data: "Waiter"),
+                  button(data: "Cook"),
+                  button(data: "Cashier"),
+                ],
+              ),
+            )),
+      ),
+    );
   }
 }

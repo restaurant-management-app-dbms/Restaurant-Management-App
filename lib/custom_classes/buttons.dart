@@ -27,6 +27,8 @@ class _buttonState extends State<button> {
       return neworder();
     } else if (page == "Add User") {
       return adduser();
+    } else if (page == "Waiter" || page == "Cook" || page == "Cashier") {
+      return adduser();
     }
 
     return waiter();
