@@ -13,12 +13,16 @@ import 'package:dbms_app/screens/select_role.dart';
 import 'package:dbms_app/screens/select_status.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(
     MaterialApp(debugShowCheckedModeBanner: false, routes: {
-      "/": (context) => login(),
+      "/": (context) => wrapper(default_page: waiter(), current_page: waiter()),
       "/login": (context) => login(),
       "/adduser": (context) => adduser(),
       "/waiter": (context) => waiter(),

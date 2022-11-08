@@ -1,7 +1,10 @@
 import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/form_fields.dart';
 import 'package:dbms_app/screens/waiter.dart';
+import 'package:dbms_app/services/authentication/authenticate.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class login extends StatefulWidget {
@@ -14,6 +17,9 @@ class loginState extends State<login> {
   String Password = '';
   String error = '';
 
+  auth authenticate = auth();
+  String? userid;
+
   @override
   Widget build(BuildContext context) {
     decorations decoration = decorations();
@@ -21,10 +27,26 @@ class loginState extends State<login> {
     final _key = GlobalKey<FormState>();
 
     void set_credential(String type, String data) {
-      if (type == "Email") {
+      if (type == "Username") {
         Email = data;
       } else {
         Password = data;
+      }
+    }
+
+    Future<void> validate_user(String Email, String Password) async {
+      userid = await authenticate.signinwithemailandpassword(Email, Password);
+
+      if (userid != null) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    wrapper(default_page: waiter(), current_page: waiter())));
+      } else {
+        setState(() {
+          error = "INVALID CREDENTIALS";
+        });
       }
     }
 
@@ -57,12 +79,7 @@ class loginState extends State<login> {
                     ElevatedButton(
                         onPressed: () async {
                           if (_key.currentState!.validate() == true) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => wrapper(
-                                        default_page: waiter(),
-                                        current_page: waiter())));
+                            validate_user(Email, Password);
                           } else {
                             setState(() {
                               error = "INVALID CREDENTIALS";

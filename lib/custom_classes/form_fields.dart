@@ -24,14 +24,15 @@ class form_field extends StatelessWidget {
           ),
           SizedBox(height: 5.0),
           TextFormField(
-              decoration: decoration.formDecor().copyWith(hintText:type),
-              validator: (credential) => credential!.isEmpty ? "Invalid Credential" : null,
-              onChanged: (credential) 
-              {
+              decoration: decoration.formDecor().copyWith(hintText: type),
+              validator: (credential) =>
+                  credential!.isEmpty ? "Invalid Credential" : null,
+              onChanged: (credential) {
                 data = credential;
-                set_credential(data, type);
+                set_credential(type,data);
               },
-              style:TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         ],
       ),
     );
