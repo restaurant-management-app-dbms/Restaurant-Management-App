@@ -4,6 +4,7 @@ import 'package:dbms_app/screens/myorders.dart';
 import 'package:dbms_app/screens/new_order.dart';
 import 'package:dbms_app/screens/orders_page.dart';
 import 'package:dbms_app/screens/waiter.dart';
+import 'package:dbms_app/services/authentication/authenticate.dart';
 import 'package:flutter/material.dart';
 
 class wrapper extends StatefulWidget {
@@ -23,7 +24,8 @@ class _wrapperState extends State<wrapper> {
     "Menu",
     "Orders",
     "New Order",
-    "Add User"
+    "Add User",
+    "Log Out"
   ];
 
   void find_screen(String page) {
@@ -61,9 +63,14 @@ class _wrapperState extends State<wrapper> {
                         title: Text(screens[index],
                             style: TextStyle(color: Colors.white)),
                         onTap: () {
-                          setState(() {
-                            find_screen(screens[index]);
-                            Navigator.pop(context);
+                          setState(() async {
+                            if (screens[index] == "Log Out") {
+                              await auth().signout();
+                              Navigator.pushReplacementNamed(context, "/login");
+                            } else {
+                              find_screen(screens[index]);
+                              Navigator.pop(context);
+                            }
                           });
                         },
                       ),

@@ -26,5 +26,7 @@ class database {
 
     /// Create document and write data to Firebase
     await docUser.set(json);
+
+    return true;
   }
 }

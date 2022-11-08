@@ -1,5 +1,5 @@
 import 'package:dbms_app/data_classes/items.dart';
-import 'package:dbms_app/data_classes/orders.dart';
+import 'package:dbms_app/data_classes/order_details.dart';
 import 'package:flutter/material.dart';
 
 class order_details extends StatelessWidget {

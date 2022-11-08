@@ -1,7 +1,9 @@
 import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/form_fields.dart';
+import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/services/authentication/authenticate.dart';
 import 'package:dbms_app/services/crud/database.dart';
+import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class adduser extends StatefulWidget {
@@ -42,20 +44,26 @@ class adduserState extends State<adduser> {
         String email, String phone, String role) async {
       auth authenticate = auth();
       database userdata = database();
-
-      print(username);
-      print(password);
-      print(role);
       userid = await authenticate.register_user(username, password);
 
       if (userid != null) {
-       await userdata.createUser(
-         id: userid.toString(),
-       name: name,
-      email: email,
-      phone: phone,
-      role: role,
-      username: username);
+        bool is_created = await userdata.createUser(
+            id: userid.toString(),
+            name: name,
+            email: email,
+            phone: phone,
+            role: role,
+            username: username);
+
+        print(is_created);
+
+        if (is_created == true) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      wrapper(default_page: waiter(), current_page: waiter())));
+        }
       }
     }
 
@@ -88,7 +96,8 @@ class adduserState extends State<adduser> {
                     ),
                     ElevatedButton(
                         onPressed: () async {
-                          role = (await Navigator.pushNamed(context, "/role")).toString();
+                          role = (await Navigator.pushNamed(context, "/role"))
+                              .toString();
                         },
                         style: ButtonStyle(
                             backgroundColor:
