@@ -24,7 +24,6 @@ class _wrapperState extends State<wrapper> {
     "Menu",
     "Orders",
     "New Order",
-    "Add User",
     "Log Out"
   ];
 
@@ -62,16 +61,16 @@ class _wrapperState extends State<wrapper> {
                         tileColor: Colors.red,
                         title: Text(screens[index],
                             style: TextStyle(color: Colors.white)),
-                        onTap: () {
-                          setState(() async {
-                            if (screens[index] == "Log Out") {
-                              await auth().signout();
-                              Navigator.pushReplacementNamed(context, "/login");
-                            } else {
+                        onTap: () async {
+                          if (screens[index] == "Log Out") {
+                            await auth().signout();
+                            Navigator.pushReplacementNamed(context, "/login");
+                          } else {
+                            setState(() {
                               find_screen(screens[index]);
                               Navigator.pop(context);
-                            }
-                          });
+                            });
+                          }
                         },
                       ),
                       Divider(height: 10.0, thickness: 5.0, color: Colors.black)

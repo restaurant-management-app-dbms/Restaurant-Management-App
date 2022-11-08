@@ -15,6 +15,7 @@ class auth {
       final signin_response = await _user.signInWithEmailAndPassword(
           email: email, password: password);
       final user = signin_response.user;
+
       return user != null ? user.uid : null;
     } catch (e) {
       print("Sign in Error:${e}");

@@ -1,5 +1,6 @@
 import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/form_fields.dart';
+import 'package:dbms_app/screens/admin.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/services/authentication/authenticate.dart';
 import 'package:dbms_app/services/crud/database.dart';
@@ -62,7 +63,7 @@ class adduserState extends State<adduser> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      wrapper(default_page: waiter(), current_page: waiter())));
+                      wrapper(default_page:admin(), current_page:admin())));
         }
       }
     }

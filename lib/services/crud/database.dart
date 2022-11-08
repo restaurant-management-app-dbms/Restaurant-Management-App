@@ -36,7 +36,7 @@ class database {
   }
   // User End
 
-  // Menu Start
+  // Create Menu
   Future createMenuItem({
     required String itemName,
     required String category,
@@ -58,6 +58,27 @@ class database {
     await docUser.set(json);
   }
 
+  //Get role
+
+  Future<String> getrole(String userid) async {
+    try {
+      final user_details = data.collection('Users').doc(userid);
+      String role = "Waiter";
+      await user_details.get().then((snapshot) => {
+            snapshot.data()?.forEach((key, value) {
+              if (key == 'role') {
+                role = value;
+              }
+            })
+          });
+      return role;
+    } catch (e) {
+      print("Error caused:${e}");
+      return '';
+    }
+  }
+
+  //Add Order
   Future addorder(
       {required String waiter, required String table_number}) async {
     /// Reference to document
@@ -76,6 +97,7 @@ class database {
     await docUser.set(neworder);
   }
 
+//Get Menu
   Stream<List<Menuitem>> getAllMenuItems() {
     final habebe = data.collection('Menu').snapshots().map((snapshot) =>
         snapshot.docs
@@ -85,29 +107,7 @@ class database {
     return habebe;
   }
 
-  // Menu End
-
-  // Order Start
-
-  Future createOrder({
-    required String waiterUsername,
-    required String waiterStatus,
-    required String tableNumber,
-  }) async {
-    /// Reference to document
-    final docUser = FirebaseFirestore.instance.collection('Users').doc();
-    final order = Order(
-      id: docUser.id,
-      waiterUsername: waiterUsername,
-      waiterStatus: waiterStatus,
-      tableNumber: tableNumber,
-    ); // User
-    final json = order.toJson();
-
-    /// Create document and write data to Firebase
-    await docUser.set(json);
-  }
-
+  //Get Order
   Stream<List<Order>> getAllOrders() {
     return FirebaseFirestore.instance
         .collection('OrderDetails')

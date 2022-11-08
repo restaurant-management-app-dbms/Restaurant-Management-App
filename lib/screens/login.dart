@@ -1,7 +1,11 @@
 import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/form_fields.dart';
+import 'package:dbms_app/screens/admin.dart';
+import 'package:dbms_app/screens/cashier.dart';
+import 'package:dbms_app/screens/cook.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/services/authentication/authenticate.dart';
+import 'package:dbms_app/services/crud/database.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +28,8 @@ class loginState extends State<login> {
   Widget build(BuildContext context) {
     decorations decoration = decorations();
 
+    Widget home_page = waiter();
+
     final _key = GlobalKey<FormState>();
 
     void set_credential(String type, String data) {
@@ -34,15 +40,36 @@ class loginState extends State<login> {
       }
     }
 
+    Future<String> get_role(String userid) async {
+      database user = database();
+
+      String role;
+      role = await user.getrole(userid);
+      return role;
+    }
+
     Future<void> validate_user(String Email, String Password) async {
       userid = await authenticate.signinwithemailandpassword(Email, Password);
 
+      print("Before login");
       if (userid != null) {
+        String role = (await get_role(userid.toString())).toString();
+
+        if (role == "Admin") {
+          home_page = admin();
+        } else if (role == "Waiter") {
+          home_page = waiter();
+        } else if (role == "Cook") {
+          home_page = cook();
+        } else if (role == "Cashier") {
+          home_page = cashier();
+        }
+
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    wrapper(default_page: waiter(), current_page: waiter())));
+                    wrapper(default_page: home_page, current_page: home_page)));
       } else {
         setState(() {
           error = "INVALID CREDENTIALS";

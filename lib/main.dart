@@ -22,7 +22,7 @@ void main() async {
 
   runApp(
     MaterialApp(debugShowCheckedModeBanner: false, routes: {
-      "/": (context) => orders(),
+      "/": (context) => login(),
       "/login": (context) => login(),
       "/adduser": (context) => adduser(),
       "/waiter": (context) => waiter(),
