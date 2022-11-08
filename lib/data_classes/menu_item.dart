@@ -1,11 +1,11 @@
-class MenuItem {
+class Menuitem {
   String id;
   String itemName;
   String category;
   String pictureUrl;
   String price;
 
-  MenuItem({
+  Menuitem({
     this.id = '',
     required this.itemName,
     required this.category,
@@ -21,7 +21,7 @@ class MenuItem {
         'price': price,
       };
 
-  static MenuItem fromJson(Map<String, dynamic> json) => MenuItem(
+  static Menuitem fromJson(Map<String, dynamic> json) => Menuitem(
         id: json['id'],
         itemName: json['itemName'],
         category: json['category'],

@@ -1,8 +1,9 @@
 import 'package:dbms_app/data_classes/items.dart';
+import 'package:dbms_app/data_classes/menu_item.dart';
 import 'package:flutter/material.dart';
 
 class menucard extends StatelessWidget {
-  items item;
+  Menuitem item;
   IconData icons;
 
   menucard({required this.item, required this.icons});
@@ -20,9 +21,7 @@ class menucard extends StatelessWidget {
             padding: EdgeInsets.all(5.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5.0),
-              child: Image.asset(
-                item.image,
-              ),
+              child: Image.asset('assets/pizza.png'),
             ),
           ),
           Container(
@@ -33,9 +32,12 @@ class menucard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "Food Name:${item.food}",
-                  textAlign: TextAlign.center,
+                Container(
+                  width: 88,
+                  child: Text(
+                    "Food Name:${item.itemName}",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 SizedBox(height: 5.0),
                 Text("Price:Rs ${item.price}"),
@@ -44,9 +46,10 @@ class menucard extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-              child: Container(
-            padding: EdgeInsets.all(8.0),
+          SizedBox(width: 50.0),
+          Container(
+            width: 50.0,
+            //padding: EdgeInsets.all(8.0),
             child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black),
@@ -57,7 +60,7 @@ class menucard extends StatelessWidget {
                   }
                 },
                 child: Icon(icons, color: Colors.white)),
-          ))
+          )
         ]));
   }
 }

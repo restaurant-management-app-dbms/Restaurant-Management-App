@@ -3,23 +3,34 @@ import 'package:dbms_app/custom_classes/menu_card.dart';
 import 'package:dbms_app/data_classes/items.dart';
 import 'package:dbms_app/screens/menu.dart';
 import 'package:dbms_app/screens/waiter.dart';
+import 'package:dbms_app/services/crud/database.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class new_ordercard extends StatefulWidget {
-  String quantity;
+  String table_number;
   String waiter;
   Function setState;
   String error = '';
 
   new_ordercard(
-      {required this.quantity, required this.waiter, required this.setState});
+      {required this.table_number,
+      required this.waiter,
+      required this.setState});
 
   @override
   State<new_ordercard> createState() => _new_ordercardState();
 }
 
 class _new_ordercardState extends State<new_ordercard> {
+  Future<void> add_order() async {
+    database order = database();
+    print(widget.waiter);
+    print(widget.table_number);
+    await order.addorder(
+        waiter: widget.waiter, table_number: widget.table_number);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -50,7 +61,7 @@ class _new_ordercardState extends State<new_ordercard> {
                   .formDecor()
                   .copyWith(hintText: "Enter Table Number"),
               onChanged: (credential) {
-                widget.quantity = credential;
+                widget.table_number = credential;
               },
               showCursor: true,
             ),
@@ -81,10 +92,12 @@ class _new_ordercardState extends State<new_ordercard> {
                 Center(
                   child: ElevatedButton(
                       onPressed: () {
-                        if (widget.quantity == null.toString()) {
+                        if (widget.table_number == null.toString()) {
                           setState(() {
                             widget.error = "Enter Table Number";
                           });
+                        } else {
+                          add_order();
                         }
                       },
                       child: Text(

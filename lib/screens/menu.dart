@@ -1,38 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dbms_app/custom_classes/menu_card.dart';
 import 'package:dbms_app/data_classes/items.dart';
 import 'package:dbms_app/screens/new_order.dart';
 import 'package:dbms_app/screens/waiter.dart';
+import 'package:dbms_app/services/crud/database.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:dbms_app/data_classes/menu_item.dart';
 
-class menu extends StatelessWidget {
-  List<items> food_items = [
-    items(
-        image: 'assets/pizza.png',
-        food: "Pizza",
-        price: 500,
-        category: "Main Course"),
-    items(
-        image: 'assets/pizza.png',
-        food: "Pizza",
-        price: 500,
-        category: "Main Course"),
-    items(
-        image: 'assets/pizza.png',
-        food: "Pizza",
-        price: 500,
-        category: "Main Course"),
-    items(
-        image: 'assets/pizza.png',
-        food: "Pizza",
-        price: 500,
-        category: "Main Course"),
-    items(
-        image: 'assets/pizza.png',
-        food: "Pizza",
-        price: 500,
-        category: "Main Course"),
-  ];
+class menu extends StatefulWidget {
+  @override
+  State<menu> createState() => _menuState();
+}
+
+class _menuState extends State<menu> {
+  database data = database();
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +29,52 @@ class menu extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               color: Colors.red,
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: food_items.length,
-                  itemBuilder: (((context, index) {
-                    return menucard(item: food_items[index], icons: Icons.add);
-                  }))),
+              child: StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection("Menu").snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.active) {
+                      if (snapshot.data!.docs.isNotEmpty) {
+                        print(true);
+                        print(snapshot.data!.docs.length);
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: ((context, index) => menucard(
+                                item: Menuitem(
+                                    itemName: snapshot.data!.docs[index]
+                                        ['itemName'],
+                                    category: snapshot.data!.docs[index]
+                                        ['category'],
+                                    pictureUrl: snapshot.data!.docs[index]
+                                        ['pictureUrl'],
+                                    price: snapshot.data!.docs[index]['price']),
+                                icons: Icons.add)));
+                      } else {
+                        print("NO DATA");
+                        return Center(
+                            child: Text(
+                          "Loading Data",
+                          style: TextStyle(color: Colors.black),
+                        ));
+                      }
+                    } else {
+                      print("NO Connection");
+                      return Center(
+                          child: Text(
+                        "Loading Data",
+                        style: TextStyle(color: Colors.black),
+                      ));
+                    }
+
+                    return Center(
+                        child: Text(
+                      "Loading Data",
+                      style: TextStyle(color: Colors.black),
+                    ));
+                  }),
             ),
             ElevatedButton(
                 onPressed: () {

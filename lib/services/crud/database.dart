@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dbms_app/data_classes/user.dart';
 import 'package:dbms_app/data_classes/menu_item.dart';
-import 'package:dbms_app/data_classes/orders.dart';
+import 'package:dbms_app/data_classes/order_details.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class database {
@@ -42,8 +44,8 @@ class database {
     required String price,
   }) async {
     /// Reference to document
-    final docUser = FirebaseFirestore.instance.collection('Menu').doc();
-    final menuItem = MenuItem(
+    final docUser = data.collection('Menu').doc();
+    final menuItem = Menuitem(
       id: docUser.id,
       itemName: itemName,
       category: category,
@@ -56,11 +58,31 @@ class database {
     await docUser.set(json);
   }
 
-  Stream<List<MenuItem>> getAllMenuItems() {
-    return FirebaseFirestore.instance.collection('Orders').snapshots().map(
-        (snapshot) => snapshot.docs
-            .map((doc) => MenuItem.fromJson(doc.data()))
+  Future addorder(
+      {required String waiter, required String table_number}) async {
+    /// Reference to document
+    final docUser = data.collection('OrderDetails').doc();
+
+    Map<String, dynamic> neworder = {
+      'Waiter': waiter,
+      'Last Update': DateTime.now().hour.toString() +
+          ":" +
+          DateTime.now().minute.toString(),
+      'Order ID': Random().nextInt(100).toString(),
+      'Table Number': table_number
+    };
+
+    /// Create document and write data to Firebase
+    await docUser.set(neworder);
+  }
+
+  Stream<List<Menuitem>> getAllMenuItems() {
+    final habebe = data.collection('Menu').snapshots().map((snapshot) =>
+        snapshot.docs
+            .map((doc) => Menuitem.fromJson(doc.data()))
             .toList(growable: false));
+
+    return habebe;
   }
 
   // Menu End
@@ -87,8 +109,10 @@ class database {
   }
 
   Stream<List<Order>> getAllOrders() {
-    return FirebaseFirestore.instance.collection('Orders').snapshots().map(
-        (snapshot) => snapshot.docs
+    return FirebaseFirestore.instance
+        .collection('OrderDetails')
+        .snapshots()
+        .map((snapshot) => snapshot.docs
             .map((doc) => Order.fromJson(doc.data()))
             .toList(growable: false));
   }
