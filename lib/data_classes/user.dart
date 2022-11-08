@@ -7,7 +7,7 @@ class User {
   final String username;
 
   User({
-    this.id = '',
+    required this.id,
     required this.name,
     required this.email,
     required this.phone,
@@ -32,26 +32,4 @@ class User {
         role: json['role'],
         username: json['username'],
       );
-}
-
-Future createUser(
-    {required String name,
-    required String email,
-    required String phone,
-    required String role,
-    required String username}) async {
-  /// Reference to document
-  final docUser = FirebaseFirestore.instance.collection('Users').doc();
-  final user = User(
-    id: docUser.id,
-    name: name,
-    phone: phone,
-    email: email,
-    role: role,
-    username: username,
-  ); // User
-  final json = user.toJson();
-
-  /// Create document and write data to Firebase
-  await docUser.set(json);
 }

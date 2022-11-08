@@ -27,10 +27,7 @@ class _buttonState extends State<button> {
       return neworder();
     } else if (page == "Add User") {
       return adduser();
-    } else if (page == "Waiter" || page == "Cook" || page == "Cashier") {
-      return adduser();
     }
-
     return waiter();
   }
 
@@ -41,12 +38,18 @@ class _buttonState extends State<button> {
         SizedBox(height: 2.0),
         ElevatedButton(
             onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => wrapper(
-                          default_page: waiter(),
-                          current_page: find_screen(widget.data))));
+              if (widget.data == "Waiter" ||
+                  widget.data == "Cook" ||
+                  widget.data == "Cashier") {
+                Navigator.pop(context, widget.data);
+              } else {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => wrapper(
+                            default_page: waiter(),
+                            current_page: find_screen(widget.data))));
+              }
             },
             child: Text(
               widget.data,

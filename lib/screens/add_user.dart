@@ -1,5 +1,7 @@
 import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/form_fields.dart';
+import 'package:dbms_app/services/authentication/authenticate.dart';
+import 'package:dbms_app/services/crud/database.dart';
 import 'package:flutter/material.dart';
 
 class adduser extends StatefulWidget {
@@ -13,12 +15,14 @@ class adduserState extends State<adduser> {
   String Username = '';
   String Email = '';
   String Phone = '';
+  String role = '';
 
   String error = '';
 
   @override
   Widget build(BuildContext context) {
     final _key = GlobalKey<FormState>();
+    String? userid;
 
     void set_credential(String type, String data) {
       if (type == "Name") {
@@ -31,6 +35,27 @@ class adduserState extends State<adduser> {
         Email = data;
       } else if (type == "Phone") {
         Phone = data;
+      }
+    }
+
+    Future<void> createuser(String name, String password, String username,
+        String email, String phone, String role) async {
+      auth authenticate = auth();
+      database userdata = database();
+
+      print(username);
+      print(password);
+      print(role);
+      userid = await authenticate.register_user(username, password);
+
+      if (userid != null) {
+       await userdata.createUser(
+         id: userid.toString(),
+       name: name,
+      email: email,
+      phone: phone,
+      role: role,
+      username: username);
       }
     }
 
@@ -62,8 +87,8 @@ class adduserState extends State<adduser> {
                       style: TextStyle(color: Colors.black, fontSize: 15.0),
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/role");
+                        onPressed: () async {
+                          role = (await Navigator.pushNamed(context, "/role")).toString();
                         },
                         style: ButtonStyle(
                             backgroundColor:
@@ -77,6 +102,10 @@ class adduserState extends State<adduser> {
                     ElevatedButton(
                         onPressed: () async {
                           if (_key.currentState!.validate() == true) {
+                            if (role != '') {
+                              createuser(
+                                  Name, Password, Username, Email, Phone, role);
+                            }
                           } else {
                             setState(() {
                               error = "INVALID CREDENTIALS";

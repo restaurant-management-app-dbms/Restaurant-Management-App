@@ -17,7 +17,7 @@ class auth {
       final user = signin_response.user;
       return user != null ? user.uid : null;
     } catch (e) {
-      print("Sign in Error:${e.toString}");
+      print("Sign in Error:${e}");
       return null;
     }
   }
@@ -36,7 +36,7 @@ class auth {
           : null; //this happens if the email or password is not in the prescribed format
     } catch (e) {
       print(
-          "Error registering user:${e.toString}"); //this occurs when there is a connection error in sending and receiving requests
+          "Error registering user:${e}"); //this occurs when there is a connection error in sending and receiving requests
       return null;
     }
   }
