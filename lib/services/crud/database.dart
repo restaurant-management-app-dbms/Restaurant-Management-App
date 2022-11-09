@@ -58,8 +58,26 @@ class database {
     await docUser.set(json);
   }
 
-  //Get role
+  //Get Name
+  Future<String> getname(String userid) async {
+    try {
+      final user_details = data.collection('Users').doc(userid);
+      String name = "";
+      await user_details.get().then((snapshot) => {
+            snapshot.data()?.forEach((key, value) {
+              if (key == 'name') {
+                name = value;
+              }
+            })
+          });
+      return name;
+    } catch (e) {
+      print("Error caused:${e}");
+      return '';
+    }
+  }
 
+  //Get role
   Future<String> getrole(String userid) async {
     try {
       final user_details = data.collection('Users').doc(userid);

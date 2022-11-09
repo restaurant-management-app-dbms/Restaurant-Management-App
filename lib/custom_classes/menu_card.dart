@@ -1,12 +1,39 @@
 import 'package:dbms_app/data_classes/items.dart';
 import 'package:dbms_app/data_classes/menu_item.dart';
+import 'package:dbms_app/global.dart';
 import 'package:flutter/material.dart';
 
-class menucard extends StatelessWidget {
-  Menuitem item;
+class menucard extends StatefulWidget {
+  items item;
   IconData icons;
+  Function resetstate;
 
-  menucard({required this.item, required this.icons});
+  menucard({required this.item, required this.icons, required this.resetstate});
+
+  @override
+  State<menucard> createState() => _menucardState();
+}
+
+class _menucardState extends State<menucard> {
+  void addfooditem(BuildContext context) {
+    Navigator.pushNamed(context, "/add_item", arguments: {
+      "itemname": widget.item.food,
+      "itemprice": widget.item.price,
+      "category": widget.item.category
+    });
+  }
+
+  void removefooditem(BuildContext context) {
+    for (var i = 0; i < food_items.length; i++) {
+      if (food_items[i].food == widget.item.food &&
+          food_items[i].price == widget.item.price &&
+          food_items[i].category == widget.item.category) {
+        food_items.removeAt(i);
+        widget.resetstate();
+        break;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +62,19 @@ class menucard extends StatelessWidget {
                 Container(
                   width: 88,
                   child: Text(
-                    "Food Name:${item.itemName}",
+                    "Food Name:${widget.item.food}",
                     textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: 5.0),
-                Text("Price:Rs ${item.price}"),
+                Text("Price:Rs ${widget.item.price}"),
                 SizedBox(height: 5.0),
-                Text("Category:${item.category}")
+                Container(
+                    width: 88, child: Text("Category:${widget.item.category}"))
               ],
             ),
           ),
-          SizedBox(width: 50.0),
+          SizedBox(width: 20.0),
           Container(
             width: 50.0,
             //padding: EdgeInsets.all(8.0),
@@ -55,11 +83,13 @@ class menucard extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all(Colors.black),
                 ),
                 onPressed: () {
-                  if (icons == Icons.add) {
-                    Navigator.pushNamed(context, "/add_item");
+                  if (widget.icons == Icons.add) {
+                    addfooditem(context);
+                  } else if (widget.icons == Icons.remove) {
+                    removefooditem(context);
                   }
                 },
-                child: Icon(icons, color: Colors.white)),
+                child: Icon(widget.icons, color: Colors.white)),
           )
         ]));
   }

@@ -3,6 +3,7 @@ import 'package:dbms_app/custom_classes/form_fields.dart';
 import 'package:dbms_app/screens/admin.dart';
 import 'package:dbms_app/screens/cashier.dart';
 import 'package:dbms_app/screens/cook.dart';
+import 'package:dbms_app/global.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/services/authentication/authenticate.dart';
 import 'package:dbms_app/services/crud/database.dart';
@@ -42,19 +43,23 @@ class loginState extends State<login> {
 
     Future<String> get_role(String userid) async {
       database user = database();
+      String getrole = await user.getrole(userid);
+      return getrole;
+    }
 
-      String role;
-      role = await user.getrole(userid);
-      return role;
+    Future<String> get_name(String userid) async {
+      database user = database();
+      String getrole = await user.getname(userid);
+      return getrole;
     }
 
     Future<void> validate_user(String Email, String Password) async {
       userid = await authenticate.signinwithemailandpassword(Email, Password);
-
-      print("Before login");
-      if (userid != null) {
-        String role = (await get_role(userid.toString())).toString();
-
+      if (userid != null)
+      {
+        role = (await get_role(userid.toString())).toString();
+        name = (await get_name(userid.toString())).toString();
+        
         if (role == "Admin") {
           home_page = admin();
         } else if (role == "Waiter") {

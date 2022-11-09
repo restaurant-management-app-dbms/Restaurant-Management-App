@@ -1,8 +1,12 @@
 import 'package:dbms_app/screens/add_user.dart';
+import 'package:dbms_app/screens/admin.dart';
+import 'package:dbms_app/screens/cashier.dart';
+import 'package:dbms_app/screens/cook.dart';
 import 'package:dbms_app/screens/menu.dart';
 import 'package:dbms_app/screens/myorders.dart';
 import 'package:dbms_app/screens/new_order.dart';
 import 'package:dbms_app/screens/orders_page.dart';
+import 'package:dbms_app/global.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +31,17 @@ class _buttonState extends State<button> {
       return neworder();
     } else if (page == "Add User") {
       return adduser();
+    } else if (page == "Waiter") {
+      return waiter();
+    } else if (page == "Admin") {
+      return admin();
+    }
+    else if (page == "Cook") {
+      return cook();
+    }
+
+    else if (page == "Cashier") {
+      return cashier();
     }
     return waiter();
   }
@@ -47,7 +62,7 @@ class _buttonState extends State<button> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => wrapper(
-                            default_page: waiter(),
+                            default_page: find_screen(role),
                             current_page: find_screen(widget.data))));
               }
             },

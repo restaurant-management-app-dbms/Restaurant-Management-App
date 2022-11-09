@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dbms_app/custom_classes/menu_card.dart';
 import 'package:dbms_app/data_classes/items.dart';
@@ -15,6 +17,11 @@ class menu extends StatefulWidget {
 
 class _menuState extends State<menu> {
   database data = database();
+
+  void callback() {
+    setState(() {
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +50,18 @@ class _menuState extends State<menu> {
                             scrollDirection: Axis.vertical,
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: ((context, index) => menucard(
-                                item: Menuitem(
-                                    itemName: snapshot.data!.docs[index]
-                                        ['itemName'],
-                                    category: snapshot.data!.docs[index]
-                                        ['category'],
-                                    pictureUrl: snapshot.data!.docs[index]
-                                        ['pictureUrl'],
-                                    price: snapshot.data!.docs[index]['price']),
-                                icons: Icons.add)));
+                                  item: items(
+                                      food: snapshot.data!.docs[index]
+                                          ['itemName'],
+                                      category: snapshot.data!.docs[index]
+                                          ['category'],
+                                      image: snapshot.data!.docs[index]
+                                          ['pictureUrl'],
+                                      price: snapshot.data!.docs[index]
+                                          ['price']),
+                                  icons: Icons.add,
+                                  resetstate: callback,
+                                )));
                       } else {
                         print("NO DATA");
                         return Center(

@@ -4,6 +4,7 @@ import 'package:dbms_app/screens/myorders.dart';
 import 'package:dbms_app/screens/new_order.dart';
 import 'package:dbms_app/screens/orders_page.dart';
 import 'package:dbms_app/screens/waiter.dart';
+import 'package:dbms_app/global.dart';
 import 'package:dbms_app/services/authentication/authenticate.dart';
 import 'package:flutter/material.dart';
 
@@ -44,6 +45,18 @@ class _wrapperState extends State<wrapper> {
     }
   }
 
+  void logout(BuildContext context) async {
+    bool is_logged_out = await auth().signout();
+    if (is_logged_out == true) {
+      Navigator.pushReplacementNamed(context, "/login");
+      food_items.clear();
+      role = "Waiter";
+      name = '';
+    } else {
+      print("Logout Unsuccesful");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +76,7 @@ class _wrapperState extends State<wrapper> {
                             style: TextStyle(color: Colors.white)),
                         onTap: () async {
                           if (screens[index] == "Log Out") {
-                            await auth().signout();
-                            Navigator.pushReplacementNamed(context, "/login");
+                            logout(context);
                           } else {
                             setState(() {
                               find_screen(screens[index]);

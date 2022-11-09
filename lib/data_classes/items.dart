@@ -1,7 +1,7 @@
 class items {
   String image;
   String food;
-  int price;
+  String price;
   String category;
 
   items(

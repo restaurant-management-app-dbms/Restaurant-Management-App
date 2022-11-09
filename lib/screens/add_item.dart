@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:dbms_app/custom_classes/buttons.dart';
 import 'package:dbms_app/custom_classes/decorations.dart';
+import 'package:dbms_app/data_classes/items.dart';
+import 'package:dbms_app/global.dart';
 import 'package:flutter/material.dart';
 
 class additem extends StatefulWidget {
@@ -11,15 +15,22 @@ class _additemState extends State<additem> {
   String quantity = null.toString();
 
   String itemname = '';
+  String itemprice = '';
+  String category = '';
 
-  String itemid = '';
-
-  String orderid = '';
+  String itemid = Random.secure().nextInt(100).toString();
 
   String error = '';
 
   @override
   Widget build(BuildContext context) {
+    //Getting the itemdetails from the menu_card page;
+    Map<String, dynamic> argument =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    itemname = argument["itemname"];
+    itemprice = argument["itemprice"];
+    category = argument["category"];
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -51,10 +62,6 @@ class _additemState extends State<additem> {
                       textAlign: TextAlign.start,
                       style: TextStyle(fontSize: 20.0)),
                   SizedBox(height: 5.0),
-                  Text("Order ID:${orderid}",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: 20.0)),
-                  SizedBox(height: 5.0),
                   TextField(
                     textAlign: TextAlign.center,
                     decoration: decorations()
@@ -75,6 +82,14 @@ class _additemState extends State<additem> {
                                 setState(() {
                                   error = "Enter Quantity";
                                 });
+                              } else {
+                                food_items.add(items(
+                                    image: 'assets/pizza.png',
+                                    food: itemname,
+                                    price: itemprice,
+                                    category: category));
+
+                                Navigator.pop(context);
                               }
                             },
                             child: Text(

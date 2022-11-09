@@ -48,8 +48,10 @@ class auth {
   Future signout() async {
     try {
       await _user.signOut();
+      return true;
     } catch (e) {
       print("Error Occurred:e");
+      return false;
     }
   }
 ///////////////////////////////////////////////////////////////
