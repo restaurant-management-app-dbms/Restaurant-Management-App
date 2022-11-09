@@ -1,4 +1,5 @@
 import 'package:dbms_app/screens/add_user.dart';
+import 'package:dbms_app/screens/addorder.dart';
 import 'package:dbms_app/screens/menu.dart';
 import 'package:dbms_app/screens/myorders.dart';
 import 'package:dbms_app/screens/new_order.dart';
@@ -19,14 +20,14 @@ class wrapper extends StatefulWidget {
 }
 
 class _wrapperState extends State<wrapper> {
-  List<String> screens = [
-    "Home",
-    "My Orders",
-    "Menu",
-    "Orders",
-    "New Order",
-    "Log Out"
-  ];
+  List<String> screens = ["Home", "My Orders", "Menu", "Orders", "Log Out"];
+
+  void initState() {
+    if (role == "Waiter") {
+      screens.insert(4, "New Order");
+      screens.insert(5, "Add Order");
+    }
+  }
 
   void find_screen(String page) {
     if (page == "Home") {
@@ -36,6 +37,8 @@ class _wrapperState extends State<wrapper> {
       widget.current_page = myorders();
     } else if (page == "Menu") {
       widget.current_page = menu();
+    } else if (page == "Add Order") {
+      widget.current_page = addorder();
     } else if (page == "Orders") {
       widget.current_page = orders();
     } else if (page == "New Order") {

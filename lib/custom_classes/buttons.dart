@@ -2,6 +2,7 @@ import 'package:dbms_app/screens/add_user.dart';
 import 'package:dbms_app/screens/admin.dart';
 import 'package:dbms_app/screens/cashier.dart';
 import 'package:dbms_app/screens/cook.dart';
+import 'package:dbms_app/screens/addorder.dart';
 import 'package:dbms_app/screens/menu.dart';
 import 'package:dbms_app/screens/myorders.dart';
 import 'package:dbms_app/screens/new_order.dart';
@@ -25,7 +26,11 @@ class _buttonState extends State<button> {
       return myorders();
     } else if (page == "Menu") {
       return menu();
-    } else if (page == "Orders") {
+    } 
+    else if (page == "Add Order") {
+      return addorder();
+    }
+    else if (page == "Orders") {
       return orders();
     } else if (page == "New Order") {
       return neworder();
@@ -35,12 +40,9 @@ class _buttonState extends State<button> {
       return waiter();
     } else if (page == "Admin") {
       return admin();
-    }
-    else if (page == "Cook") {
+    } else if (page == "Cook") {
       return cook();
-    }
-
-    else if (page == "Cashier") {
+    } else if (page == "Cashier") {
       return cashier();
     }
     return waiter();
@@ -55,7 +57,12 @@ class _buttonState extends State<button> {
             onPressed: () {
               if (widget.data == "Waiter" ||
                   widget.data == "Cook" ||
-                  widget.data == "Cashier") {
+                  widget.data == "Cashier" ||
+                  widget.data == "Accepted" ||
+                  widget.data == "Done" ||
+                  widget.data == "Picked" ||
+                  widget.data == "Payment Pending" ||
+                  widget.data == "Paid") {
                 Navigator.pop(context, widget.data);
               } else {
                 Navigator.pushReplacement(

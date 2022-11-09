@@ -2,7 +2,7 @@ import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/buttons.dart';
 import 'package:flutter/material.dart';
 
-class role extends StatelessWidget {
+class selectrole extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

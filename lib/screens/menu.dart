@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dbms_app/custom_classes/menu_card.dart';
 import 'package:dbms_app/data_classes/items.dart';
@@ -19,8 +17,7 @@ class _menuState extends State<menu> {
   database data = database();
 
   void callback() {
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -59,7 +56,7 @@ class _menuState extends State<menu> {
                                           ['pictureUrl'],
                                       price: snapshot.data!.docs[index]
                                           ['price']),
-                                  icons: Icons.add,
+                                  icons: Icons.food_bank,
                                   resetstate: callback,
                                 )));
                       } else {

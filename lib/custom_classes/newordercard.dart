@@ -1,7 +1,11 @@
 import 'package:dbms_app/custom_classes/decorations.dart';
 import 'package:dbms_app/custom_classes/menu_card.dart';
 import 'package:dbms_app/data_classes/items.dart';
-import 'package:dbms_app/screens/menu.dart';
+import 'package:dbms_app/global.dart';
+import 'package:dbms_app/screens/admin.dart';
+import 'package:dbms_app/screens/cashier.dart';
+import 'package:dbms_app/screens/cook.dart';
+import 'package:dbms_app/screens/addorder.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/services/crud/database.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
@@ -28,7 +32,27 @@ class _new_ordercardState extends State<new_ordercard> {
     print(widget.waiter);
     print(widget.table_number);
     await order.addorder(
-        waiter: widget.waiter, table_number: widget.table_number);
+        waiter_name: widget.waiter, table_number: widget.table_number);
+
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                wrapper(default_page: waiter(), current_page: waiter())));
+  }
+
+  Widget find_role() {
+    if (role == "Waiter") {
+      return waiter();
+    } else if (role == "Admin") {
+      return admin();
+    } else if (role == "Cook") {
+      return cook();
+    } else if (role == "Cashier") {
+      return cashier();
+    }
+
+    return waiter();
   }
 
   @override
@@ -75,8 +99,8 @@ class _new_ordercardState extends State<new_ordercard> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => wrapper(
-                                    default_page: waiter(),
-                                    current_page: menu())));
+                                    default_page: find_role(),
+                                    current_page: addorder())));
                       },
                       child: Text(
                         "Edit Order",

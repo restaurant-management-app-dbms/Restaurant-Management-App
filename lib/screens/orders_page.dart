@@ -7,8 +7,7 @@ class orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream:
-            FirebaseFirestore.instance.collection('OrderDetails').snapshots(),
+        stream: FirebaseFirestore.instance.collection('Orders').snapshots(),
         builder: (context, snapshot) {
           if (snapshot.data!.docs.isNotEmpty) {
             return ListView.builder(
@@ -19,10 +18,10 @@ class orders extends StatelessWidget {
                   return order_details(
                       orders: order_data(
                           order_image: 'assets/order.png',
-                          orderid: snapshot.data!.docs[index]['Order ID'],
-                          table_num: snapshot.data!.docs[index]['Table Number'],
+                          orderid: snapshot.data!.docs[index].id,
+                          table_num: snapshot.data!.docs[index]['tableNumber'],
                           last_update: snapshot.data!.docs[index]
-                              ['Last Update']));
+                              ['lastUpdatedAt']));
                 })));
           } else {
             print("NO DATA");
