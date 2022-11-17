@@ -5,6 +5,7 @@ import 'package:dbms_app/screens/cashier.dart';
 import 'package:dbms_app/screens/cook.dart';
 import 'package:dbms_app/screens/login.dart';
 import 'package:dbms_app/screens/addorder.dart';
+import 'package:dbms_app/screens/menu.dart';
 import 'package:dbms_app/screens/myorders.dart';
 import 'package:dbms_app/screens/new_order.dart';
 import 'package:dbms_app/screens/order_status.dart';
@@ -22,7 +23,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(
     MaterialApp(debugShowCheckedModeBanner: false, routes: {
-      "/": (context) => login(),
+      "/": (context) => menu(),
       "/login": (context) => login(),
       "/adduser": (context) => adduser(),
       "/waiter": (context) => waiter(),
