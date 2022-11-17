@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dbms_app/data_classes/user.dart';
 import 'package:dbms_app/data_classes/menu_item.dart';
 import 'package:dbms_app/data_classes/order_details.dart';
+import 'package:dbms_app/screens/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:dbms_app/global.dart';
 
@@ -179,26 +180,58 @@ class database {
   }
 
   //Get item
-  Future<dynamic> getitem(String orderid) async {
+  Future<dynamic> getitem(String orderid) {
+    Future<dynamic> item_details ;
+  
     try {
-      final order_details = data.collection('Orders').doc(orderid);
+      final order_details =
+          data.collection('Orders').doc(orderid).collection('Items');
+      var lock = true;
 
-      List<dynamic> items = [];
+      order_details.get().then((ds) {
+        if (ds != null) {
+          ds.docs.forEach((doc) {
+            final itemdoc = doc.data();
+            final itemid = itemdoc['itemid'];
+            final quantity = itemdoc['quantity'];
 
-      await order_details.get().then((snapshot) => {
-            snapshot.data()?.forEach((key, value) {
-              if (key == 'items') {
-                items = value;
-              }
-            })
+            final menuitem = data.collection('Menu').doc(itemid);
+
+            menuitem.get().then((snapshot) {
+              Map<String, dynamic>? dat = {};
+
+              snapshot.data()!.forEach((key, value) {
+                Map<String, dynamic> temp = {key: value};
+                dat.addEntries(temp.entries);
+              });
+              Map<String, dynamic> quant = {'quantity': quantity};
+
+              dat.addEntries(quant.entries);
+
+              item_details.add(dat);
+            });
+            lock = false;
+            // .forEach((key, value) {
+            //   if (key == "itemid") {
+            //     final menuitem = data.collection('Menu').doc(value);
+
+            //     item_details.add(doc.data());
+            //   }
+            // }
           });
+        }
+      });
+
+      //while (lock) {
+      // continue;
+      //}
 
       print("Found Item");
-      return items;
+      print(item_details);
     } catch (e) {
       print("Unable to get order items:${e}");
-      return [];
     }
+    return item_details;
   }
 
   //Add Order
@@ -211,10 +244,10 @@ class database {
       List<Map<String, dynamic>> orderitems = [];
 
       for (var i = 0; i < food_items.length; i++) {
-        orderitems.add({
-          'item': food_items[i].food,
-          'price': food_items[i].price,
-          'category': food_items[i].category,
+        final itemUser = docUser.collection('Items').doc();
+
+        await itemUser.set({
+          'itemid': food_items[i].itemid,
           'quantity': food_items[i].quantity
         });
       }
@@ -230,7 +263,6 @@ class database {
         'tableNumber': table_number,
         'waiterStatus': '',
         'waiterUsername': waiter_name,
-        'items': orderitems
       };
 
       /// Create document and write data to Firebase

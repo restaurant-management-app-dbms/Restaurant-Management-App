@@ -88,7 +88,8 @@ class _additemState extends State<additem> {
                                     food: itemname,
                                     price: itemprice,
                                     category: category,
-                                    quantity:quantity
+                                    quantity:quantity,
+                                    itemid:argument["itemid"]
                                     ));
 
                                 Navigator.pop(context);

@@ -19,7 +19,8 @@ class _menucardState extends State<menucard> {
     Navigator.pushNamed(context, "/add_item", arguments: {
       "itemname": widget.item.food,
       "itemprice": widget.item.price,
-      "category": widget.item.category
+      "category": widget.item.category,
+      "itemid": widget.item.itemid
     });
   }
 

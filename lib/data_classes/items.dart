@@ -4,10 +4,13 @@ class items {
   String price;
   String category;
   String quantity;
+  String itemid;
+
   items(
       {this.quantity = '',
       required this.image,
       required this.food,
       required this.price,
-      required this.category});
+      required this.category,
+      this.itemid='1'});
 }

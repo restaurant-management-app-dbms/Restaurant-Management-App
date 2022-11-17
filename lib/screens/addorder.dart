@@ -79,7 +79,9 @@ class _addorderState extends State<addorder> {
                                       image: snapshot.data!.docs[index]
                                           ['pictureUrl'],
                                       price: snapshot.data!.docs[index]
-                                          ['price']),
+                                          ['price'],
+                                   itemid: snapshot.data!.docs[index].id,
+                                  ),
                                   icons: Icons.add,
                                   resetstate: callback,
                                 )));
