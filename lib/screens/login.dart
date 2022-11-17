@@ -111,7 +111,7 @@ class loginState extends State<login> {
                     ElevatedButton(
                         onPressed: () async {
                           if (_key.currentState!.validate() == true) {
-                            validate_user(Email, Password);
+                            await validate_user(Email, Password);
                           } else {
                             setState(() {
                               error = "INVALID CREDENTIALS";

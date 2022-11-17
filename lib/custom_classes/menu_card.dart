@@ -63,7 +63,7 @@ class _menucardState extends State<menucard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width / 10,
+                      width: MediaQuery.of(context).size.width / 9,
                       child: Text(
                         "Food Name:${widget.item.food}",
                         textAlign: TextAlign.center,

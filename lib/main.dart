@@ -16,14 +16,18 @@ import 'package:dbms_app/screens/view_items.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:dbms_app/global.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  food_items = [];
+  role = "Waiter";
+  name = '';
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
     MaterialApp(debugShowCheckedModeBanner: false, routes: {
-      "/": (context) => menu(),
+      "/": (context) => login(),
       "/login": (context) => login(),
       "/adduser": (context) => adduser(),
       "/waiter": (context) => waiter(),

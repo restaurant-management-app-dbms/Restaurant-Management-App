@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dbms_app/custom_classes/menu_card.dart';
 import 'package:dbms_app/data_classes/items.dart';
+import 'package:dbms_app/screens/admin.dart';
+import 'package:dbms_app/screens/cashier.dart';
+import 'package:dbms_app/screens/cook.dart';
 import 'package:dbms_app/screens/new_order.dart';
 import 'package:dbms_app/screens/waiter.dart';
 import 'package:dbms_app/services/crud/database.dart';
 import 'package:dbms_app/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:dbms_app/data_classes/menu_item.dart';
+import 'package:dbms_app/global.dart';
 
 class addorder extends StatefulWidget {
   @override
@@ -18,6 +22,26 @@ class _addorderState extends State<addorder> {
 
   void callback() {
     setState(() {});
+  }
+
+  Widget find_home() {
+    if (role == "Waiter") {
+      return waiter();
+    }
+
+    if (role == "Cashier") {
+      return cashier();
+    }
+
+    if (role == "Admin") {
+      return admin();
+    }
+
+    if (role == "Cook") {
+      return cook();
+    }
+
+    return waiter();
   }
 
   @override
@@ -89,7 +113,7 @@ class _addorderState extends State<addorder> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => wrapper(
-                              default_page: waiter(),
+                              default_page: find_home(),
                               current_page: neworder())));
                 },
                 style: ButtonStyle(

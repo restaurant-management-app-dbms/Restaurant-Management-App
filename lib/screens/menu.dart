@@ -83,22 +83,6 @@ class _menuState extends State<menu> {
                     ));
                   }),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => wrapper(
-                              default_page: waiter(),
-                              current_page: neworder())));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
-                    fixedSize:
-                        MaterialStateProperty.all(const Size(150.0, 35.0))),
-                child: Text("Done",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)))
           ],
         ),
       ),

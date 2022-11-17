@@ -27,6 +27,10 @@ class _wrapperState extends State<wrapper> {
       screens.insert(4, "New Order");
       screens.insert(5, "Add Order");
     }
+
+    if (role == "Admin") {
+      screens.remove("My Orders");
+    }
   }
 
   void find_screen(String page) {
