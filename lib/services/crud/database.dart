@@ -189,17 +189,20 @@ class database {
           .collection('Items')
           .get();
 
-      order_details.docs.forEach((doc) async {
-        final itemdoc = doc.data();
-        final itemid = itemdoc['itemid'];
-        final quantity = itemdoc['quantity'];
+      final menuitems = await data.collection('Menu').get();
 
-        final menuitem = await data.collection('Menu').doc(itemid).get();
+      for (var i = 0; i < order_details.size; i++) {
+        var doc = order_details.docs[i];
+        var itemdoc = doc.data();
+        var itemid = itemdoc['itemid'];
+        var quantity = itemdoc['quantity'];
 
-        final item = menuitem.data(); //item
-        item!['quantity'] = quantity;
+        
+        var menuitem =menuitems.docs.where((element) => element.id == itemid);
+        var item = menuitem.first.data(); //item
+        item['quantity'] = quantity;
         item_details.add(item);
-      });
+      }
 
       return item_details;
     } catch (e) {

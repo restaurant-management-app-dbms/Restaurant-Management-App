@@ -49,7 +49,7 @@ class orderstatusState extends State<order_status> {
     table_no = order_details[0]['tableNumber'];
     waiter_status = order_details[0]['waiterStatus'];
     waiter_username = order_details[0]['waiterUsername'];
-    TotalAmount =order_details[1];
+    TotalAmount = order_details[1];
   }
 
   List<String> screens = ["Home", "My Orders", "Menu", "Orders", "Log Out"];
@@ -119,7 +119,7 @@ class orderstatusState extends State<order_status> {
   void get_items(BuildContext context) async {
     database data = database();
 
-    List<dynamic> items = await data.getitem(orderID);
+    List<dynamic> items = (await data.getitem(orderID)).toList();
 
     Navigator.pushNamed(context, '/view_items', arguments: items);
   }
@@ -161,8 +161,7 @@ class orderstatusState extends State<order_status> {
 
   @override
   Widget build(BuildContext context) {
-    order_details =
-        ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+    order_details = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
     initialize_variable(order_details);
 
     final _key = GlobalKey<FormState>();

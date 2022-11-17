@@ -41,7 +41,7 @@ class _viewitemsState extends State<viewitems> {
                     return menucard(
                         item: items(
                             image: 'assets/pizza.png',
-                            food: order_details[index]['item'],
+                            food: order_details[index]['itemName'],
                             price: order_details[index]['price'],
                             category: order_details[index]['category'],
                             quantity:order_details[index]['quantity']),
