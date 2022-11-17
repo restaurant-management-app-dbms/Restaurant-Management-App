@@ -9,6 +9,7 @@ class myorders extends StatelessWidget {
   bool is_valid_order = false;
 
   void isvalid(List<QueryDocumentSnapshot<Object?>> snapshot) {
+    orderdetails = [];
     for (var i = 0; i < snapshot.length; i++) {
       if (role == "Waiter") {
         if (name == snapshot[i]['waiterUsername']) {
@@ -18,10 +19,7 @@ class myorders extends StatelessWidget {
         if (name == snapshot[i]['cookUsername']) {
           orderdetails.add(snapshot[i]);
         }
-      } 
-      
-      else 
-      {
+      } else {
         orderdetails.add(snapshot[i]);
       }
     }

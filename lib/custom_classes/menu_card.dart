@@ -74,7 +74,8 @@ class _menucardState extends State<menucard> {
                     SizedBox(height: 5.0),
                     Container(
                         width: MediaQuery.of(context).size.width / 6,
-                        child: Text("Category:${widget.item.category}"))
+                        child: Text("Category:${widget.item.category}")),
+                    Container(child: Text("Quantity:${widget.item.quantity}"))
                   ],
                 ),
               ),

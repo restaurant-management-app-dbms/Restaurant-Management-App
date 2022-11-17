@@ -28,7 +28,7 @@ class _wrapperState extends State<wrapper> {
       screens.insert(5, "Add Order");
     }
 
-    if (role == "Admin") {
+    if (role == "Admin" || role=="Cashier") {
       screens.remove("My Orders");
     }
   }

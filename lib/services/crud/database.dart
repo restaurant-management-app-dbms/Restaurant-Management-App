@@ -214,7 +214,8 @@ class database {
         orderitems.add({
           'item': food_items[i].food,
           'price': food_items[i].price,
-          'category': food_items[i].category
+          'category': food_items[i].category,
+          'quantity': food_items[i].quantity
         });
       }
       Map<String, dynamic> neworder = {

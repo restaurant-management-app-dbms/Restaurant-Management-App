@@ -43,7 +43,8 @@ class _viewitemsState extends State<viewitems> {
                             image: 'assets/pizza.png',
                             food: order_details[index]['item'],
                             price: order_details[index]['price'],
-                            category: order_details[index]['category']),
+                            category: order_details[index]['category'],
+                            quantity:order_details[index]['quantity']),
                         icons: Icons.food_bank_rounded,
                         resetstate: callback);
                   }))),

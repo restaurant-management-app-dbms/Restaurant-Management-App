@@ -87,7 +87,9 @@ class _additemState extends State<additem> {
                                     image: 'assets/pizza.png',
                                     food: itemname,
                                     price: itemprice,
-                                    category: category));
+                                    category: category,
+                                    quantity:quantity
+                                    ));
 
                                 Navigator.pop(context);
                               }

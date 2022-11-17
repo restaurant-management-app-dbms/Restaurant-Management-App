@@ -3,9 +3,10 @@ class items {
   String food;
   String price;
   String category;
-
+  String quantity;
   items(
-      {required this.image,
+      {this.quantity = '',
+      required this.image,
       required this.food,
       required this.price,
       required this.category});

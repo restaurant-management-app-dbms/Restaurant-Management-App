@@ -55,11 +55,10 @@ class loginState extends State<login> {
 
     Future<void> validate_user(String Email, String Password) async {
       userid = await authenticate.signinwithemailandpassword(Email, Password);
-      if (userid != null)
-      {
+      if (userid != null) {
         role = (await get_role(userid.toString())).toString();
         name = (await get_name(userid.toString())).toString();
-        
+
         if (role == "Admin") {
           home_page = admin();
         } else if (role == "Waiter") {
@@ -85,6 +84,7 @@ class loginState extends State<login> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Container(
+          height: (MediaQuery.of(context).size.height),
           decoration: decoration.login_decor(),
           child: Form(
             key: _key,
