@@ -180,58 +180,32 @@ class database {
   }
 
   //Get item
-  Future<dynamic> getitem(String orderid) {
-    Future<dynamic> item_details ;
-  
+  Future<dynamic> getitem(String orderid) async {
     try {
-      final order_details =
-          data.collection('Orders').doc(orderid).collection('Items');
-      var lock = true;
+      final item_details = [];
+      final order_details = await data
+          .collection('Orders')
+          .doc(orderid)
+          .collection('Items')
+          .get();
 
-      order_details.get().then((ds) {
-        if (ds != null) {
-          ds.docs.forEach((doc) {
-            final itemdoc = doc.data();
-            final itemid = itemdoc['itemid'];
-            final quantity = itemdoc['quantity'];
+      order_details.docs.forEach((doc) async {
+        final itemdoc = doc.data();
+        final itemid = itemdoc['itemid'];
+        final quantity = itemdoc['quantity'];
 
-            final menuitem = data.collection('Menu').doc(itemid);
+        final menuitem = await data.collection('Menu').doc(itemid).get();
 
-            menuitem.get().then((snapshot) {
-              Map<String, dynamic>? dat = {};
-
-              snapshot.data()!.forEach((key, value) {
-                Map<String, dynamic> temp = {key: value};
-                dat.addEntries(temp.entries);
-              });
-              Map<String, dynamic> quant = {'quantity': quantity};
-
-              dat.addEntries(quant.entries);
-
-              item_details.add(dat);
-            });
-            lock = false;
-            // .forEach((key, value) {
-            //   if (key == "itemid") {
-            //     final menuitem = data.collection('Menu').doc(value);
-
-            //     item_details.add(doc.data());
-            //   }
-            // }
-          });
-        }
+        final item = menuitem.data(); //item
+        item!['quantity'] = quantity;
+        item_details.add(item);
       });
 
-      //while (lock) {
-      // continue;
-      //}
-
-      print("Found Item");
-      print(item_details);
+      return item_details;
     } catch (e) {
       print("Unable to get order items:${e}");
     }
-    return item_details;
+    return [];
   }
 
   //Add Order
