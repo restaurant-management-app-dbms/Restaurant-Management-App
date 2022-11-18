@@ -151,23 +151,28 @@ class database {
   }
 
   //Get Price
-  Future<String> get_price(String orderid) async {
+  Future<dynamic> get_price(String orderid) async {
     try {
-      final order_details = data.collection('Orders').doc(orderid);
-
       List<dynamic> items = [];
       int total_price = 0;
 
-      await order_details.get().then((snapshot) => {
-            snapshot.data()?.forEach((key, value) {
-              if (key == 'items') {
-                items = value;
-              }
-            })
-          });
+      final order_details = await data
+          .collection('Orders')
+          .doc(orderid)
+          .collection('Items')
+          .get();
+      final menuitems = await data.collection('Menu').get();
 
-      for (var i = 0; i < items.length; i++) {
-        total_price += int.parse(items[i]['price']);
+      for (var i = 0; i < order_details.size; i++) {
+        var doc = order_details.docs[i];
+        var itemdoc = doc.data();
+        var itemid = itemdoc['itemid'];
+        var quantity = itemdoc['quantity'];
+
+        var menuitem = menuitems.docs.where((element) => element.id == itemid);
+        var item = menuitem.first.data(); //item
+        String price = item['price'];
+        total_price+=(int.parse(price)*int.parse(quantity));
       }
 
       print("Found total price");
@@ -197,8 +202,7 @@ class database {
         var itemid = itemdoc['itemid'];
         var quantity = itemdoc['quantity'];
 
-        
-        var menuitem =menuitems.docs.where((element) => element.id == itemid);
+        var menuitem = menuitems.docs.where((element) => element.id == itemid);
         var item = menuitem.first.data(); //item
         item['quantity'] = quantity;
         item_details.add(item);

@@ -84,7 +84,6 @@ class loginState extends State<login> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Container(
-          height: (MediaQuery.of(context).size.height),
           decoration: decoration.login_decor(),
           child: Form(
             key: _key,
