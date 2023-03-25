@@ -3,7 +3,7 @@
 This app is designed to manage tasks among 4 major roles in a restaurant which include waiter,cook,cashier and the admin.
 
 Waiter:
-        1:Make orders
+        1:Make orders\n
         2:View his orders as well as 
         3:View all the orders incase the waiter who has been assigned an order(which is ready) is busy,this waiter can serve the order.
 
