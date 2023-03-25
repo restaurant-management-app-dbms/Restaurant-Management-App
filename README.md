@@ -1,16 +1,20 @@
-# dbms_app
+# RESTAURANT MANAGEMENT APP
 
-A new Flutter project.
+This app is designed to manage tasks among 4 major roles in a restaurant which include waiter,cook,cashier and the admin.
 
-## Getting Started
+Waiter:
+        1:Make orders
+        2:View his orders as well as 
+        3:View all the orders incase the waiter who has been assigned an order(which is ready) is busy,this waiter can serve the order.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Cook:
+      1:Can view the orders assigned to him.
+      2:Update the status of the order:
+                                        a:ACCEPT STATUS:Once the cook accepts the order
+                                        b:DONE STATUS:Once the order is ready.
+Cashier:
+        1:Can view the orders.  
+        2:Update the status of the order:
+                                          a:PAID STATUS:Once the customer pays for the order.
+ Admin:
+      1:Assigns roles to a worker:Waiter/cook/cashier
