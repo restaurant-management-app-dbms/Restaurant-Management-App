@@ -7,7 +7,7 @@ Waiter:
         1:Make orders
         2:View his orders        
         3:View all the orders incase the waiter who has been assigned an order(which is ready) is busy,this waiter can serve the order.
-        4:Updat the status of the order:
+        4:Update the status of the order:
                                           a:PICKED OR NOT PICKED:Whether the order is picked or not
 Cook:
       
