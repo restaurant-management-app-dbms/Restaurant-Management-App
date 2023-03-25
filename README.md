@@ -1,5 +1,9 @@
 # RESTAURANT MANAGEMENT APP
 
+Restaurant Management App.png
+
+<img src="Restaurant Management App.png" width="400"> 
+
 This app is designed to manage tasks among 4 major roles in a restaurant which include waiter,cook,cashier and the admin.
 
 Waiter:
